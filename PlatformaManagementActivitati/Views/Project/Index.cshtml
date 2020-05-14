@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PlatformaManagementActivitati.Models.Project>
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"].ToString()</h3>
+}
+
+<h2>Lista projecte </h2>
+@Html.ActionLink("Adauga proiect", "New", "Project", null, new { @class = "btn btn-primary" })
+@if (!Model.Any())
+{
+    <p>Nu exista niciun proiect..</p>
+}
+<table class="table table-bordered table-hover">
+    <tbody>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(project.Title, "Show", "Project", new { id = project.Id }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

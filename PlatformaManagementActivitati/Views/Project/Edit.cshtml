@@ -1,0 +1,32 @@
+﻿@model PlatformaManagementActivitati.Models.Project
+@{
+    ViewBag.Title = "ProjectForm";
+}
+
+<h2>Project Form</h2>
+
+@using (Html.BeginForm("SaveEdit", "Project"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descriere)
+        @Html.TextBoxFor(m => m.Descriere, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descriere)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DeadlineDate)
+        @Html.TextBoxFor(m => m.DeadlineDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DeadlineDate)
+    </div>
+    @Html.HiddenFor(m => m.StartDate)
+    @Html.HiddenFor(m => m.UserId)
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+

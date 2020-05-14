@@ -1,0 +1,39 @@
+﻿@model PlatformaManagementActivitati.ViewModels.ShowTaskViewModel
+
+<h2>@Model.Assignment.Name</h2>
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
+<div>Descriere: @Model.Assignment.Descriere</div>
+@if (Model.Assignment.Status == 0)
+{
+    <div>Status: Neinceput</div>
+}
+@if (Model.Assignment.Status == 1)
+{
+    <div>Status: Inceput</div>
+}
+@if (Model.Assignment.Status == 2)
+{
+    <div>Status: Finalizat</div>
+}
+
+<div>Data: @Model.Assignment.DataStart - @Model.Assignment.DataFinalizare</div>
+<div>Numele echipei: @Model.Assignment.Team.Name</div>
+<div>Membru responsabil: @Model.Assignment.UserResponsabil.UserName</div>
+@if (Model.AfisareModifica || Model.AfisareButoane)
+{
+    @Html.ActionLink("Modifica task", "EditTask", "Task", new { id = Model.Assignment.Id }, new { @class = "btn btn-primary" })
+}
+@if (Model.AfisareButoane)
+{
+    using (Html.BeginForm(actionName: "DeleteTask", controllerName: "Task", method: FormMethod.Post, routeValues: new { id = Model.Assignment.Id}))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-primary" type="submit">Sterge task</button>
+    }
+}
+
+@Html.ActionLink("Inapoi la echipa", "ShowTeam", "Team", new { id = Model.Assignment.TeamId }, new { @class = "btn btn-primary" })

@@ -1,0 +1,53 @@
+﻿@model PlatformaManagementActivitati.ViewModels.ProjectViewModel
+
+<h2>Show</h2>
+
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Model.Project.Title</div>
+    <div class="panel-body">
+        Continut articol: <strong>@Model.Project.Descriere</strong>
+        <br />
+        <i class="glyphicon glyphicon-user"></i> <i>Proiect creat de:</i>
+        <strong> @Model.Project.User.UserName </strong>
+    </div>
+
+    <div>
+        <h4>Echipe:</h4>
+        @if (Model.Teams != null)
+        {
+            foreach (var team in Model.Teams)
+            {
+                if (Model.EsteMembru || Model.AfisareButoane)
+                {
+                    <div>@Html.ActionLink(team.Name, "ShowTeam", "Team", new { id = team.Id }, null)</div>
+                }
+                else
+                {
+                    <div>@team.Name</div>
+                }
+            }
+        }
+    </div>
+
+
+    <br />
+    @if (Model.AfisareButoane == true)
+    {
+        @Html.ActionLink("Editeaza proiectul", "Edit", "Project", new { id = Model.Project.Id }, new { @class = "btn btn-primary" })
+        using (Html.BeginForm(actionName: "Detele", controllerName: "Project", method: FormMethod.Post, routeValues: new { id = Model.Project.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-primary" type="submit">Sterge proiecutl</button>
+        }
+        @Html.ActionLink("Creaza echipa", "AddTeam", "Team", new { id = Model.Project.Id }, new { @class = "btn btn-primary" })
+    }
+    <br />
+    <br />
+    @Html.ActionLink("Inapoi la proiecte", "Index", "Project", new { id = Model.Project.Id }, new { @class = "btn btn-primary" })
+</div>

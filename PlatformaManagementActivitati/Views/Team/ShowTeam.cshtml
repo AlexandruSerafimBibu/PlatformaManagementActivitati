@@ -1,0 +1,46 @@
+﻿@model PlatformaManagementActivitati.ViewModels.ShowTeamViewModel
+
+<h2>@Html.ActionLink(Model.Team.Name, "Edit", "Team", new { id = Model.Team.Id }, null)</h2>
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@TempData["message"]</h3>
+}
+
+<div>
+    <h3>Membrii echipei:</h3>
+    @foreach (var name in Model.Members)
+    {
+        <div>@name</div>
+    }
+</div>
+<div>
+    <h3>Task-uri:</h3>
+    @if (Model.Assignments != null)
+    {
+        foreach (var assignment in Model.Assignments)
+        {
+            if (Model.AfisareButoane_2 == true)
+            {
+                <div>@Html.ActionLink(assignment.Name, "ShowTask", "Task", new { id = assignment.Id }, null)</div>
+            }
+            else
+            {
+                <div> @assignment.Name</div>
+            }
+        }
+    }
+</div>
+@if (Model.AfisareButoane == true)
+{
+    @Html.ActionLink("Adauga task", "AddTask", "Task", new { id = Model.Team.Id }, new { @class = "btn btn-primary" })
+    using (Html.BeginForm(actionName: "DeleteTeam", controllerName: "Team", method: FormMethod.Post, routeValues: new { id = Model.Team.Id }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-primary" type="submit">Sterge echipa</button>
+    }
+    @Html.ActionLink("Adauga membru", "AddMember", "Team", new { id = Model.Team.Id }, new { @class = "btn btn-primary" })
+}
+<br />
+@Html.ActionLink("Inapoi la proiect", "Show", "Project", new { id = Model.Team.ProjectId }, new { @class = "btn btn-primary" })
+

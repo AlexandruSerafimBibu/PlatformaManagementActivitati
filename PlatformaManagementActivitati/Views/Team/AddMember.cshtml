@@ -1,0 +1,17 @@
+﻿@model PlatformaManagementActivitati.ViewModels.AddMemberToTeamViewModel
+
+<h2>Adauga membru</h2>
+
+@using (Html.BeginForm("SaveNewMember", "Team"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MemberToTeam.MemberId)
+        @Html.DropDownListFor(m => m.MemberToTeam.MemberId, new SelectList(Model.PossibleNewMembers, "Id", "UserName"), "Alege userul", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MemberToTeam.MemberId)
+    </div>
+    @Html.HiddenFor(m => m.MemberToTeam.Id)
+    @Html.HiddenFor(m => m.MemberToTeam.TeamId)
+    <button type="submit" class="btn btn-primary">Save</button>
+}

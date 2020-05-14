@@ -1,0 +1,35 @@
+﻿@model PlatformaManagementActivitati.Models.Assignment
+
+<h2>Modifica task-ul</h2>
+
+@using (Html.BeginForm("SaveTask", "Task"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div> 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Status, "Status 0 - neinceput. 1 - inceput. 2 - terminat.")
+        @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Status)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descriere)
+        @Html.TextBoxFor(m => m.Descriere, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descriere)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DataFinalizare)
+        @Html.TextBoxFor(m => m.DataFinalizare, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DataFinalizare)
+    </div>
+    @Html.HiddenFor(m => m.UserResponsabilId)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.TeamId)
+    @Html.HiddenFor(m => m.DataStart)
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
+
